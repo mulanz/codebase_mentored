@@ -28,5 +28,6 @@ function mousePressed() {
     r = random(255);
     g = random(255);
     b = random(255);
+    console.log("I AM AN ELLIPSE");
   }
 }
