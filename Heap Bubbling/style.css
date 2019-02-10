@@ -1,0 +1,63 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+/* .instructions {
+  text-align: center;
+  vertical-align: middle;
+  line-height: 90px;
+}
+.instructions h1 {
+  font-size: 30px;
+}
+
+ Split the screen in half
+.fourty {
+  height: 100%;
+  width: 40%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sixty {
+  height: 100%;
+  width: 60%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+ Control the left side
+.left {
+  left: 0;
+  background-color: #5C7AFF;
+  text-decoration-color: #FFFFF;
+}
+
+.left h2 {
+  color: white;
+}
+
+ Control the right side
+.right {
+  right: 0;
+}
+
+.centered {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+} */
+
+cnv {
+  display: block;
+}
