@@ -1,6 +1,4 @@
-//var TRANSPARENT_BUBBLE = loadImage('images/transparent');
-//var PINK_BUBBLE = loadImage('images/transparent');
-//var ROOT_POSITION = new Position(windowWidth/2, windowHeight/4);
+/*the bug is that nodes only bubble max once, and bubbling only works with some sets of numbers*/
 var X_OFFSET = 140;
 var Y_OFFSET = 90;
 var test_array;
@@ -9,8 +7,16 @@ var test_heap;
 function setup() {
   var cnv = createCanvas(windowWidth, windowHeight);
   background(255, 255, 255);
-  textSize(30);
-  test_array = ['2', '9', '6', '8', '2', '0', '1'];
+  fill('#5C7AFF');
+  stroke('#5C7AFF');
+  rect(0, 0, windowWidth/2, windowHeight);
+
+  fill('#FFFFFF');
+  stroke('#FFFFFF');
+  textSize(40);
+  text("Heapify", 30, 60);
+
+  test_array = ['2', '9', '6', '8', '2', '7', '1'];
   test_heap = new Heap(test_array);
   console.log(test_heap);
   // console.log(test_bub_array[4]);
@@ -21,21 +27,9 @@ function setup() {
 
 function draw() {
   //bub1.display();
+  textSize(30);
   next_Button_Display();
-  // if (mousePressed() && test_heap.final_bubbles.length != 0){
-  //   console.log(test_heap.final_bubbles.length);
-  //   for (var i = 0; i < test_heap.final_bubbles.length; i++) {
-  //     fill('#5C7AFF');
-  //     strokeWeight(1);
-  //     stroke('#5C7AFF');
-  //     ellipse(test_heap[i].position.x, test_heap[i].position.y, 80, 80);
-  //     stroke('#FFFFFF');
-  //     fill('#FFFFFF');
-  //     text(test_heap[i].number, test_heap[i].position.x - 9, test_heap[i].position.y + 9);
-  //
-  //   }
-  // }
-  //test_heap.display();
+  /*displaying the bubbles*/
   for (var i = 0; i < test_heap.final_bubbles.length; i++) {
     if (test_heap.final_bubbles[i].position != null) {
       if (test_heap.final_bubbles[i].color == 0) {
@@ -51,13 +45,31 @@ function draw() {
        stroke('#FFFFFF');
        fill('#FFFFFF');
        text(test_heap.final_bubbles[i].number, test_heap.final_bubbles[i].position.x - 9, test_heap.final_bubbles[i].position.y + 9);
+    }
+  }
 
-     }
-   }
+  for (var i = 0; i < test_heap.bubble_array.length; i++) {
+    strokeWeight(1);
+    if (test_heap.current_bubble_index == i + 1) {
+      fill('#59D2FE');
+      stroke('#59D2FE');
+      text("^", test_heap.bubble_array[i].array_position.x, test_heap.bubble_array[i].array_position.y + 50);
+    }
+    else {
+      fill('#5C7AFF');
+      stroke('#5C7AFF');
+      text("^", test_heap.bubble_array[i].array_position.x, test_heap.bubble_array[i].array_position.y + 50);
+      stroke('#FFFFFF');
+      fill('#FFFFFF');
+    }
+    text(test_heap.bubble_array[i].number, test_heap.bubble_array[i].array_position.x, test_heap.bubble_array[i].array_position.y);
+    strokeWeight(3);
+    line(test_heap.bubble_array[i].array_position.x - 10, test_heap.bubble_array[i].array_position.y + 10, test_heap.bubble_array[i].array_position.x + 25, test_heap.bubble_array[i].array_position.y + 10);
+  }
 }
 
 function mousePressed() {
-  var d = dist(mouseX, mouseY, windowWidth/2 - 15, windowHeight*(3/4));
+  var d = dist(mouseX, mouseY, windowWidth*(3/4), windowHeight*(3/4) + 30);
   if (d < 15) {
     if (test_heap.sorted == 0) {
       test_heap.heapify();
@@ -73,11 +85,11 @@ function next_Button_Display() {
   fill('#FFFFFF');
   strokeWeight(3);
   stroke('#5C7AFF');
-  circle(windowWidth/2 - 15, windowHeight*(3/4), 30, 30);
+  circle(windowWidth*(3/4), windowHeight*(3/4) + 30, 30, 30);
   fill('#5C7AFF');
   strokeWeight(1);
   stroke('#5C7AFF');
-  text('>', windowWidth/2 - 60 + 38, windowHeight*(3/4) + 9 + 2);
+  text('>', windowWidth*(3/4) - 8, windowHeight*(3/4) + 9 + 2 + 30);
 }
 
 function windowResized() {
@@ -85,9 +97,12 @@ function windowResized() {
 }
 
 function arrayToBubble(num_arr) {
+  counter = 1;
   var bubble_array = new Array(num_arr.length);
   for (var i = 0; i < num_arr.length; i++) {
     var temp_bubble = new Bubble(num_arr[i]);
+    temp_bubble.array_position = new Position(counter*(windowWidth/(2*num_arr.length)) - windowWidth/(4*num_arr.length) - 10, windowHeight/2);
+    counter ++;
     bubble_array[i] = temp_bubble;
   }
   return assignBubbleProperties(bubble_array);
@@ -99,7 +114,7 @@ function assignBubbleProperties(bubble_array) {
   var counter = 1;
   var line = Math.pow(2, counter);
   var root = bubble_array[0];
-  root.position = new Position(windowWidth/2, windowHeight/7);
+  root.position = new Position(windowWidth*(3/4), windowHeight/7);
   if (bubble_array.length == 2) {
     root.children = [bubble_array[1]];
     root.children[0].position = new Position(root.position.x - X_OFFSET, root.position.y + Y_OFFSET);
@@ -230,6 +245,7 @@ class Bubble {
     this.parent = null;
     this.children = null;
     this.position = null;
+    this.array_position = null;
     this.color = 0;
     // if (this.parent == null) {
     //   this.x = windowWidth/2;
