@@ -78,7 +78,7 @@ function mousePressed() {
     if (test_heap.sorted == 0) {
       var heaped = test_heap.heapify();
       if (heaped == 1) {
-        window.alert("CONGRATS YOU HEAPIFIED THIS LIST! get back to ur heaps of hw")
+        window.alert("CONGRATS BITCH YOU HEAPIFIED THIS LIST! get back to ur heaps of hw")
       }
       console.log(test_heap);
       //test_heap.display();
