@@ -1,4 +1,5 @@
 /*the bug is that nodes only bubble max once, and bubbling only works with some sets of numbers*/
+/*would be cool to have the list get updated as it heaps */
 var X_OFFSET = 140;
 var Y_OFFSET = 90;
 var test_array;
@@ -14,7 +15,10 @@ function setup() {
   fill('#FFFFFF');
   stroke('#FFFFFF');
   textSize(40);
-  text("Heapify", 30, 60);
+  text("List", 30, 60);
+  fill('#5C7AFF');
+  stroke('#5C7AFF');
+  text("Max Heap", 30 + windowWidth/2, 60);
 
   test_array = ['2', '9', '6', '8', '2', '7', '1'];
   test_heap = new Heap(test_array);
@@ -69,10 +73,13 @@ function draw() {
 }
 
 function mousePressed() {
-  var d = dist(mouseX, mouseY, windowWidth*(3/4), windowHeight*(3/4) + 30);
+  var d = dist(mouseX, mouseY, windowWidth/2, windowHeight*(3/4) + 30);
   if (d < 15) {
     if (test_heap.sorted == 0) {
-      test_heap.heapify();
+      var heaped = test_heap.heapify();
+      if (heaped == 1) {
+        window.alert("CONGRATS YOU HEAPIFIED THIS LIST! get back to ur heaps of hw")
+      }
       console.log(test_heap);
       //test_heap.display();
       return 1;
@@ -85,11 +92,11 @@ function next_Button_Display() {
   fill('#FFFFFF');
   strokeWeight(3);
   stroke('#5C7AFF');
-  circle(windowWidth*(3/4), windowHeight*(3/4) + 30, 30, 30);
+  circle(windowWidth/2, windowHeight*(3/4) + 30, 30, 30);
   fill('#5C7AFF');
   strokeWeight(1);
   stroke('#5C7AFF');
-  text('>', windowWidth*(3/4) - 8, windowHeight*(3/4) + 9 + 2 + 30);
+  text('>', windowWidth/2 - 8, windowHeight*(3/4) + 9 + 2 + 30);
 }
 
 function windowResized() {
@@ -114,7 +121,7 @@ function assignBubbleProperties(bubble_array) {
   var counter = 1;
   var line = Math.pow(2, counter);
   var root = bubble_array[0];
-  root.position = new Position(windowWidth*(3/4), windowHeight/7);
+  root.position = new Position(windowWidth*(3/4), windowHeight/4);
   if (bubble_array.length == 2) {
     root.children = [bubble_array[1]];
     root.children[0].position = new Position(root.position.x - X_OFFSET, root.position.y + Y_OFFSET);
@@ -167,7 +174,7 @@ class Heap {
     //console.log(this.final_bubbles);
     //console.log(test_heap);
     var bub = this.bubble_array[this.current_bubble_index]
-    if (this.current_bubble_index > this.bubble_array.length) {
+    if (this.current_bubble_index >= this.bubble_array.length) {
       this.sorted = 1;
       //this.display();
       //console.log(1);
